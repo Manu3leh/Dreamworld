@@ -954,6 +954,8 @@ let Normaler_Gegner: Sprite = null
 let projectile: Sprite = null
 let Schwerer_Gegner: Sprite = null
 let mySprite: Sprite = null
+game.splash("Du: was ist das wo bin ich hier, dort liegt eine Pistole die ich mit \"\"A\" abfeuern kann und mit \"B\" kann ich noch rennen obwohl ich verletzt bin, si.. sind das Zombiegeräusche ich muss einen Ausgang finden!!")
+game.splash("Press \"A\" to play")
 let Energie = statusbars.create(80, 11, StatusBarKind.Energy)
 Energie.max = 100
 Energie.positionDirection(CollisionDirection.Top)
@@ -1086,8 +1088,6 @@ Render.setViewMode(ViewMode.raycastingView)
 mySprite = Render.getRenderSpriteVariable()
 Render.setViewAngle(0, -90)
 tiles.placeOnTile(mySprite, tiles.getTileLocation(13, 13))
-game.splash("Du: was ist das wo bin ich hier, dort liegt eine Pistole die ich mit \"\"A\" abfeuern kann und mit \"B\" kann ich noch rennen obwohl ich verletzt bin, si.. sind das Zombiegeräusche ich muss einen Ausgang finden!!")
-game.splash("Press \"A\" to play")
 music.play(music.melodyPlayable(music.spooky), music.PlaybackMode.LoopingInBackground)
 Level_1()
 forever(function () {
