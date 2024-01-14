@@ -9,7 +9,7 @@ namespace SpriteKind {
     export const EnemyN = SpriteKind.create()
     export const Dead = SpriteKind.create()
     export const Enemybackroom = SpriteKind.create()
-    export const Enemybackroomsound = SpriteKind.create()
+    export const SchwererGegner = SpriteKind.create()
 }
 namespace StatusBarKind {
     export const EInfacherGegnerHealth = StatusBarKind.create()
@@ -20,13 +20,7 @@ namespace StatusBarKind {
  * 3D Umgebung: https://www.youtube.com/watch?v=2Jw0DCp0vRE
  */
 /**
- * Loose
- */
-/**
  * Tür gimik
- */
-/**
- * Level "
  */
 /**
  * Level 2
@@ -38,13 +32,34 @@ namespace StatusBarKind {
  * Level 5
  */
 /**
- * Level 6
- */
-/**
- * Level 7
+ * Levle8
  */
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
-	
+    tiles.placeOnTile(mySprite, tiles.getTileLocation(5, 17))
+    for (let index = 0; index < 25; index++) {
+        Schwerer_Gegner = sprites.create(img`
+            . . . . . 5 5 4 4 5 5 . . . . . 
+            . . . . 5 5 4 5 5 4 5 5 . . . . 
+            . . . 5 7 4 5 5 5 5 4 7 5 . . . 
+            . . 5 5 2 7 4 4 4 4 7 2 5 5 . . 
+            . . 5 2 2 2 2 2 2 2 2 2 2 5 . . 
+            . 5 2 2 7 5 2 7 7 2 5 7 2 2 5 . 
+            . 5 2 2 5 5 7 7 7 7 5 5 2 2 5 . 
+            . 5 3 5 5 3 3 7 7 3 3 5 5 3 5 . 
+            . 5 3 5 7 3 3 c c 3 3 7 5 3 5 . 
+            5 5 3 5 5 c c c c c c 5 5 3 5 5 
+            5 5 3 5 5 5 7 7 7 7 5 5 5 3 5 5 
+            . 5 7 7 5 5 3 3 3 3 5 5 7 7 5 . 
+            . . 7 4 c 3 3 3 3 3 3 c 4 7 . . 
+            . . 7 5 5 3 3 3 3 3 5 5 5 7 . . 
+            . . . 5 5 3 3 3 3 3 3 5 5 . . . 
+            . . . . . 3 3 5 5 3 3 . . . . . 
+            `, SpriteKind.SchwererGegner)
+        tiles.placeOnRandomTile(Schwerer_Gegner, tileUtil.object11)
+        Schwerer_Gegner.follow(Render.getRenderSpriteVariable(), 42)
+        scaling.scaleToPercent(Schwerer_Gegner, 55, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+        pause(1000)
+    }
 })
 function Level_6 () {
     tiles.setCurrentTilemap(tilemap`Level13`)
@@ -174,34 +189,8 @@ function Level_6 () {
     Render.setViewAngle(0, -270)
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemybackroom, function (sprite, otherSprite) {
-    Level_4()
+    Level_5()
 })
-function Level_2_gegner () {
-    for (let index = 0; index < 10; index++) {
-        Normaler_Gegner = sprites.create(img`
-            . . . . . 3 3 3 3 3 3 3 . . . . 
-            . . . . 3 6 6 6 6 6 6 6 3 . . . 
-            . . . 3 6 3 6 6 6 6 3 6 6 3 . . 
-            . . 3 6 6 6 b 6 6 b 6 6 6 3 . . 
-            . . 3 6 6 6 6 6 6 6 6 6 6 3 . . 
-            . . 8 6 8 1 b b 1 6 6 6 6 8 . . 
-            . . 8 6 8 1 b b 1 b 6 6 6 8 . . 
-            . . . 8 8 f 2 2 f b 6 6 6 8 . . 
-            . . 3 3 8 2 2 2 2 6 6 6 8 3 . . 
-            . 3 6 6 6 6 6 6 6 6 3 3 6 6 3 . 
-            3 6 b b b 6 6 6 6 8 3 6 6 6 6 3 
-            8 b b b b b 6 6 8 3 3 6 6 6 3 3 
-            8 b b b b b b 6 6 3 6 6 6 3 . . 
-            8 6 b b b b b 6 6 6 6 6 6 3 . . 
-            . 8 6 b b b b b 6 6 6 6 3 . . . 
-            . . 8 8 3 3 3 3 3 3 3 3 . . . . 
-            `, SpriteKind.EnemyN)
-        tiles.placeOnRandomTile(Normaler_Gegner, tileUtil.object6)
-        Normaler_Gegner.follow(Render.getRenderSpriteVariable(), 25)
-        scaling.scaleToPercent(Normaler_Gegner, 40, ScaleDirection.Uniformly, ScaleAnchor.Bottom)
-        pause(1000)
-    }
-}
 scene.onOverlapTile(SpriteKind.Player, tileUtil.door0, function (sprite, location) {
     Level_2()
 })
@@ -231,6 +220,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     })
 })
 function Level_5 () {
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.EnemyN)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemybackroom)
     tiles.setCurrentTilemap(tilemap`Level14`)
     scene.setBackgroundImage(img`
         3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
@@ -355,7 +347,6 @@ function Level_5 () {
         2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
         `)
     tiles.placeOnTile(mySprite, tiles.getTileLocation(7, 8))
-    game.splash("Ahhhhh wo bin ich hier ")
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
     game.splash("Kommst hier net raus hahah")
@@ -363,14 +354,19 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, lo
     tiles.placeOnTile(mySprite, tiles.getTileLocation(13, 13))
     Render.setViewAngle(0, -90)
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.SchwererGegner, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite, effects.fire, 100)
+    sprites.destroy(sprite, effects.fire, 100)
+    info.changeScoreBy(4)
+})
 scene.onOverlapTile(SpriteKind.Player, tileUtil.door2, function (sprite, location) {
+    info.stopCountdown()
     Level_3()
 })
 function Level_2 () {
-    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
-    info.setLife(4)
-    game.splash("M. : Perfekt! Du bist aus dem Bunker ausgebrochen")
+    Render.moveWithController(3, 3, 1)
     tiles.setCurrentTilemap(tilemap`Level10`)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
     scene.setBackgroundImage(img`
         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -495,27 +491,44 @@ function Level_2 () {
         `)
     Render.setViewAngle(0, -90)
     tiles.placeOnTile(mySprite, tiles.getTileLocation(13, 13))
-    game.splash("M. : Du Musst sofort aus diesem Wald raus, ich erkläre dir alles später, finde das Gitter und versuche auszubrechen du hast ungefähr 76 Sekunden bevor die inventor dich finden")
-    Level_2_gegner()
+    info.setLife(4)
     info.startCountdown(76)
+    for (let index = 0; index < 10; index++) {
+        Normaler_Gegner = sprites.create(img`
+            . . . . . 3 3 3 3 3 3 3 . . . . 
+            . . . . 3 6 6 6 6 6 6 6 3 . . . 
+            . . . 3 6 3 6 6 6 6 3 6 6 3 . . 
+            . . 3 6 6 6 b 6 6 b 6 6 6 3 . . 
+            . . 3 6 6 6 6 6 6 6 6 6 6 3 . . 
+            . . 8 6 8 1 b b 1 6 6 6 6 8 . . 
+            . . 8 6 8 1 b b 1 b 6 6 6 8 . . 
+            . . . 8 8 f 2 2 f b 6 6 6 8 . . 
+            . . 3 3 8 2 2 2 2 6 6 6 8 3 . . 
+            . 3 6 6 6 6 6 6 6 6 3 3 6 6 3 . 
+            3 6 b b b 6 6 6 6 8 3 6 6 6 6 3 
+            8 b b b b b 6 6 8 3 3 6 6 6 3 3 
+            8 b b b b b b 6 6 3 6 6 6 3 . . 
+            8 6 b b b b b 6 6 6 6 6 6 3 . . 
+            . 8 6 b b b b b 6 6 6 6 3 . . . 
+            . . 8 8 3 3 3 3 3 3 3 3 . . . . 
+            `, SpriteKind.EnemyN)
+        tiles.placeOnRandomTile(Normaler_Gegner, tileUtil.object6)
+        Normaler_Gegner.follow(Render.getRenderSpriteVariable(), 25)
+        scaling.scaleToPercent(Normaler_Gegner, 40, ScaleDirection.Uniformly, ScaleAnchor.Bottom)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+        pause(1000)
+    }
 }
-info.onCountdownEnd(function () {
-	
+sprites.onOverlap(SpriteKind.Player, SpriteKind.SchwererGegner, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite, effects.fire, 100)
+    info.changeLifeBy(-2)
 })
-function Level_8 () {
-	
-}
+/**
+ * Level "
+ */
 function Level_1 () {
     info.setScore(0)
-    Energie = statusbars.create(80, 11, StatusBarKind.Energy)
-    Energie.max = 100
-    Energie.positionDirection(CollisionDirection.Top)
-    Energie.setBarBorder(1, 10)
-    Energie.setColor(12, 10)
     info.setLife(4)
-    Level_1_gegner()
-}
-function Level_1_gegner () {
     for (let index = 0; index < 15; index++) {
         Einfacher_Gegner = sprites.create(img`
             ................
@@ -544,261 +557,12 @@ function Level_1_gegner () {
         pause(1000)
     }
 }
-function Level_4 () {
-    sprites.destroyAllSpritesOfKind(SpriteKind.Enemybackroom)
-    info.setLife(1)
-    tiles.setCurrentTilemap(tilemap`Level12`)
-    scene.setBackgroundImage(img`
-        888888888ddddddddd333333333333339999999dddddddddddddddddd1111aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa111111111111111d1111111111111111111111111111111111
-        8888888888dddddddd333333333333339999999ddddddddddddddddd1111111111111111111aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa111111111111111111ddddd11111111111111111111111111111
-        8888888888dddddddd333333333333339999999ddddddddddddddddd111111111111111111111aaaaaaaaaaaaaaaaaaaaaaaaaaaaa1111111111111111111111111ddd11111111111111111111111111
-        8888888888dddddddd333333333333339999999ddddddddddddddddd11111111111111111111111aaaaaaaaaaaaaaaaaaaaaaaaaa11111111111111111111111111111dd111111111111111111111111
-        8888888888ddddddddd33333333333339999999ddddddddddddddddd111111111111111111111111aaaaaaaaaaaaaaaaaaaaaaa111111111111111111111111111111111d11111111111111111111111
-        8888888888ddddddddd33333333333339999999ddddddddddddddddd1111111111111111111111111aaaaaaaaaaaaaaaaaaaa111111111111111111111111111111111111ddd11111111111111111111
-        8888888888ddddddddd33333333333399999999dddd99999dddddddd1111111111111111111111111111aaaaaaaaaaaaaaaa1111111111111111111111111111111111111111dd111111111111111111
-        8888888888dddddddddd3333333333399999999d9999dddd9ddddddd111111111111111111ddddddddddd111111aaaaaaaa111111111111111111111111111111111111111111ddd1111111111111111
-        8888888888dddddddddd333333333339999999dddddddddd99dddddd1111111111111111dd111111111111111111aaaaaaa11111111111111111111111111111111111111111111dddd1111111111111
-        8888888888dddddddddd333333333339999999ddddddddddd9dddddd11111111111111dd1111111111111111111111aaaa111111111111111111111111111111111111111111111111ddddd111111111
-        8888888888dddddddddd333333333339999999dddddddddddd9ddddd1111111111dddd1111111111111111111111111aaa11111111111111111111111111111111111111111111111111111dd1111111
-        88888888889ddddd9ddd333333333339999999dddddddddddd9dddddd1111111ddd111111111111111111111111111111a1111111111111111111111111111111111111111111111111111111dd11111
-        8888888888d99999dddd333333333399999999dddddddddddd9dddddd11111dd1111111111111111111111111111111111d11111111111111111111111111111111111111111111111111111111dd111
-        88888888888ddddddddd333333333399999999ddddddddddddd9ddddd1111d1111111111111111111111111111111111111d11111111111111111111111111111111111111111111111111111111d111
-        88888888888ddddddddd333333333399999999dddddddddddddddddddaaaaaaaaaaaaaa11111111111111111111111111111dd111111111111111111111111111111111111111111111111111111dd11
-        88888888888ddddddddd3333333333999999999ddddddddddddddddddaaaaaaaaaaaaaaaaaa111111111111111111111111111dd11111111111111111111111111111111111111111111111111111dd1
-        88888888888ddddddddd3333333333999999999ddddddddddddddddddaaaaaaaaaaaaaaaaaaa1111111111111111111111111111dddd11111111111111111111111111111111111111111111111ddddd
-        88888888888ddddddddd3333333333999999999ddddddddddddddddddaaaaaaaaaaaaaaaaaaa11111111111111111111111111111111ddd111111111111111111111111111111111111111111dd11111
-        88888888888ddddddddd3333333333999999999ddddddddddddddddddaaaaaaaaaaaaaaaaaaaa1111111111111111111111111111111111ddd111aaaaaaaaaaa11111111111dddddddddddddd1111111
-        88888888888ddddddddd3338888888899999999ddddddddddddddddddaaaaaaaaaaaaaaaaaaaa111111111111111111111111111111111111ddaaaaaaaaaaaaaaaaa11111dd111111111111111111111
-        88888888888ddddddddd3888888888888888dddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaa111111111111111111111111111111111111111111aaaaaaaaaaaaaa11d11111111111111111111111
-        88888888888dddddddd88888888888dddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaa11111111111111111111111111111111111111111aaaaaaaaaaa111dd11111111111111111111111
-        88888888888ddddddddd88888888dddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaa1111111111111111111111111111111111111111aaaaaaaaaa11111111111111111111111111111
-        88888888888ddddddddd888888dddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaa11111111111111111111111111111111111111aaaaaaaaa111111111111111111111111111111
-        88888888888ddddddddd8ddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaa111111111111111111111111111111111111aaaaaaaa1111111111111111111111111111111
-        888888888888dddddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaa11111111111111111111111111111111111aaaaaaaa1111111111111111111111111111111
-        888888888888ddddddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa11111111111111111111111111111111aaaaaaaa11111111111111111111111111111111
-        888888888888dddddddddddddddddddddddddddddddddddddddddddd9daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa11111111111111111111111111111aaaaaaaaa11111111111111111111111111111111
-        888888888888ddddddddddddddddddddddddddddddddddddddddddd9ddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa111111111111111111111111aaaaaaaaaa11111111111111111111111111111111
-        888888888888ddddddddddddddddddddddddddddddddd9dddddddd9dddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa111111111111aaaaaaaaaaaa11111111111111111111111111111111
-        888888888888dddddddddddddddddddddddddddddddddd99ddddd9ddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa11111111111111111111111111111111
-        888888888888ddddddddddddddddddddddddddddddddddd99dd99dddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1111111111111111111111111111111
-        888888888888ddddddddddddddddddddddddddddddddddddd999ddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa11111111111111111111111111111
-        888888888888ddddddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa11111111111111111111111111111
-        888888888888ddddddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1111111111111111111111111111
-        888888888888ddd9ddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1111111111111111111111111111
-        888888888888ddd9ddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa111111111111111111111111111
-        8888888888888ddd99ddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa111111111111111111111111111
-        8888888888888dddd99dddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1111111111111111111111111
-        8888888888888ddddd99ddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1111111111111111111111
-        8888888888888ddddddd9dddddddddddddddddddddddddd9ddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa11111111111111111
-        8888888888888ddddddd99dddddddddddddddddddddddd9dddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa11111111111111
-        8888888888888dddddddd9ddddddddddddddddddddddd9ddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa11111111111
-        8888888888888dddddddd9dddddddddddddddddddddd9dddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa11111111
-        8888888888888dddddddd9ddddddddddddddddddddd9ddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa11111
-        8888888888888dddddddd9ddddddddddddddddddd99dddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa111
-        8888888888888dddddddd9dddddddddddddddddd9dddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        8888888888888dddddd99ddddddddddddddddddd9dddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        8888888888888dddddd9dddddddddddddddddddd9ddddddddddd9999ddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddd9dddddddddddddddddddd99dddddddddd9dddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888dddd9dddddddddddddddddddddd99ddddddddd9dddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888dddddddddddddddddddddddddddd9ddddddddd99ddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddddddddddddddddddddddddddd9ddddddddd99dddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888dddddddddddddddddddddddddddddd99ddddddddd99daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888dddddddddddddddddddddddddddddddd9ddddddddd9daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddddddddddddddddddddddddddddddd9ddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888dddddddddddddddddddddddddddddddddd9dddddddd6666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddddddddddddddddddddddddddddddddd9ddddddd666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888dddddddddddddddddddddddddddddddddddd9dddddd6666666666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddddddddddddddddddddddddddddddddddd9ddddd66622266666666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddddddddddddddddddddddddddddddddddd9ddddd666666666666666222666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddddddddddddddddddddddddddddddddddd9ddddd666666666666622666266666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888999dddddddddddddddddddddddddddddddddd9ddddd666666666666266666666666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        888888888888999999999999999dddddddddddddddddddddddd9ddddd6666666666626666666666666666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        8888888888999999999999999999999999999999ddddddddddd9ddddd66662266666666666666666222266666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888999999999999999999999999999999999999999ddd9dddddd666226666666666666666666662666666222666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888889999999999999999999999999999999999999999999999999d666266666666666622666666622666622262666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        888889999999999999999999999999999999999999999999999999999999999999222222226666666226666626666666666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        888999999999999999999999999999999999999999999999999999999999999999999999999966622266666626666662266666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        89999999999999999999999999999999999999999999999999999999999999999999999999999999999999666666622266666662266666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999996666662266666662266666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999966662266666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999996666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999aaaaaaaaaaaaaaaaaaaaaaaaa
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999aaaaaaaaaaaaaaa
-        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999aaaaa
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999222222299999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999244444422222229999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999992244444444444922222222222299999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999992444444444444444444444444222222299999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999922444444444444444444444444444444422229999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999924444442444444444444444444444444444422222299999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999924444424224444444444444444444444444444444222299999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999224444424442244444444444444444444444444444444222299999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999244444424444422244444444444444444444444444444444222229999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999996244444244444444422244444444444444444444444444444444442222299999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999992444444244444444442422222244444444444444444444444444444444222299999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999922444444244444444224444444422222222222222222224444444444444444222999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999224444444244444444244444444444422244444444444222244444444444444442222699999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999244444442444444444244444444444224444444444222444422224444444444444442222269999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999992244444442444444444244444444442244444444442444444444442222444444444444444422226699999999999999999999999999999999999999999
-        9999999999999999999999999999999999999992444444424244444444244444444424444444444224444444444444442224444444444444444422226699999999999999999999999999999999999999
-        9999999999999999999999999999999999999924444444424422444444224444444424444444444244444444444442224442222444444444444444442222226699999999999999999999999999999999
-        9999999999999999999999999999999999999224444444424444222422224444444424444444444244444444444424444444444244444444444444444444442222269999999999999999999999999999
-        9999999999999999999999999999999999999244444444244444444224444444444424444444444244444444444424444444444422224444444444444444444444222229999999999999999999999999
-        9999999999999999999999999999999999992244444422444444444242222222222224444444442444444444444424444444442244442244444444444444444444444442229999999999999999999999
-        9999999999999999999999999999999999922444444224444444442244444444444442222244442444444444444224444444224444444422224444444444444444444444442222999999999999999999
-        9999999999999999999999999999999999224444442244444444422444444444422222224422222444444444444244444444244444444442222244444444444444444444444444229999999999999999
-        9999999999999999999999999999999999244444422444444444424444444444224444444444442222444444444244444442444444444422444422444444444444444444444444442229999999999999
-        9999999999999999999999999999999992444444424444444444224444444444244444444444442222222444444244444442444444444424444444224444444444444444444444444422222999999999
-        9999999999999999999999999999999922444444244444444444244444444442244444444444224444444222244244444442444444444424444444442244444444444444444444444444442226699999
-        9999999999999999999999999999999924444442444444444444224444444442444444444442444444444444422244444442444444444424444444444422444444444444444444444444444442226999
-        9999999999999999999999999999999244444424222244444444422444444442444444444424444444444444442222244442444444444424444444444222222224444444444444444444444444422226
-        9999999999999999999999999999992244444224444422222244224444444442444444444424444444444444222424422242444444444424444444442244444442244444444444444444444444444422
-        9999999999999999999999999999992444444244444444444222222222222222444444444244444444444442244444444422244444422222222244422444444444422244444444444444444444444444
-        9999999999999999999999999999924444442244444444444442444444444422444444444244444444444442444444444442422222244442244422424444444444222422222244444444444444444444
-        9999999999999999999999999999224444422444444444444422444444444442222444444244444444444422444444444442244444444224444444224444444422444444444222224444444444444444
-        9999999999999999999999999999244444424444444444444424444444444422222222444244444444444424444444444442444444444244444444422444444224444444444444442244444444444444
-        9999999999999999999999999992444444224444444444444424444444444244444444224244444444444424444444444424444444442244444444442224444244444444444444444422244444444444
-        9999999999999999999999999924444442244444444444444424444444442444444444442222222244444424444444444424444444442244444444442442244224444444422444444444422444444444
-        9999999999999999999999999944444442444444444444444424444444442444444444422244444422244224444444444424444444444244444444444444224424444444424444444444442244444444
-        `)
-    game.splash("Du: Was ist das hier sieht so aus als hätte ich geträumt")
-    scene.setBackgroundImage(img`
-        888888888ddddddddd333333333333339999999ddddddddddddddddd1ddddddddddddddddddddddddddddddddddddddddd99999888888888888888888888888888888888888888888888888888888888
-        8888888888dddddddd333333333333339999999dddddddddddddddddadddddddddddddddddddddddddddddddddddddddddddddd999998888888888888888888888888888888888888888888888888888
-        8888888888dddddddd3333ff3333ff339999999dddddddddddddddddaadddddddddddddddddddddddddddddddddddddddddddddddddd9999988888888888888888888888888888888888888888888888
-        8888888888dddddddd3333ff3333ff339999999dddddddddddddddddaaaaadddddddddddddddddddddddddddddddddddddddddddddddddddd99888888888888888888888888888888888888888888888
-        8888888888ddddddddd33333333333339999999dddddddddddddddddaaaaaaaaaaadddddddddddddddddddddddddddddddddddddddddddddddd998888888888888888888888888888888888888888888
-        8888888888ddddddddd33333333333339999999dddddddddddddddddaaaaaaaaaaaaaaddddddddddddddddddddddddddddddddddddddddddddddd9988888888888888888888888888888888888888888
-        8888888888ddddddddd33333333333399999999dddd99999ddddddddaaaaaaaaaaaaaaadddddddddddddddddddddddddddddddddddddddddddddddd98888888888888888889999988888888888888888
-        8888888888dddddddddd3333333333399999999d9999dddd9dddddddaaaaaaaaaaaaaaaaaadddddddddddddddddddddddddddddddddddddddddddddd9988888888888899999999999888888888888888
-        8888888888dddddddddd333333333339999999dddddddddd99ddddddaaaaaaaaaaaaaaaaaaaadddddddddddddddddddddddddddddddddddddddddddddd98888888889999999999999998888888888888
-        8888888888dddddddddd333333333339999999ddddddddddd9ddddddaaaaaaaaaaaaaaaaaaaaadddddddddddddddddddddddddddddddddddddddddddddd9888888899999999999999999988888888888
-        8888888888dddddddddd333333333339999999dddddddddddd9dddddaaaaaaaaaaaaaaaaaaaaaaaadddddddddddddddddddddddddddddddddddddddddddd988889999999999999999999999888888888
-        88888888889ddddd9ddd333333333339999999dddddddddddd9ddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaddddddddddddddddddddddddddddddddddddddddd98899999999999999999999999999888888
-        8888888888d99999dddd333333333399999999dddddddddddd9ddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaddddddddddddddddddddddddddddddddddddddddd999999999999999999999999999998888
-        88888888888ddddddddd333333333399999999ddddddddddddd9dddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaddddddddddddddddddddddddddddddddddddddd99999999999999999999999999999888
-        88888888888ddddddddd333333333399999999dddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadddddddddddddddddddddddddddddddddddddd9999999999999999999999999999998
-        88888888888ddddddddd3333333333999999999ddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaddddddddddddddddddddddddddddddddd99dd999999999999999999999999999999
-        88888888888ddddddddd3333333333999999999ddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaddddddddddddddddddddddddddddddd999dd99999999999999999999999999999
-        88888888888ddddddddd3333333333999999999ddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaddddddddddddddddddddddddddddd99999d9999999999999999999999999999
-        88888888888ddddddddd3333333333999999999ddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaddddddddddddddddddddddddddd99999dd999999999999999999999999999
-        88888888888ddddddddd3338888888899999999ddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadddddddddddddddddddddddddd999999d999999999999999999999999999
-        88888888888ddddddddd3888888888888888dddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaddddddddddddddddddddddd9999999dd99999999999999999999999999
-        88888888888dddddddd88888888888dddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaddddddddddddddddddddd999999999d99999999999999999999999999
-        88888888888ddddddddd88888888dddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadddddddddddddddddd99999999999dd9999999999999999999999999
-        88888888888ddddddddd888888dddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadddddddddddddd999999999999999d9999999999999999999999999
-        88888888888ddddddddd8ddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadddddddddddda99999999999999d9999999999999999999999999
-        888888888888dddddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa99999999999999dd999999999999999999999999
-        888888888888ddddddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa999999999999999d999999999999999999999999
-        888888888888dddddddddddddddddddddddddddddddddddddddddddd9daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa999999999999999dd99999999999999999999999
-        888888888888ddddddddddddddddddddddddddddddddddddddddddd9ddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa9999999999999999d99999999999999999999999
-        888888888888ddddddddddddddddddddddddddddddddd9dddddddd9dddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa9999999999999999dd9999999999999999999999
-        888888888888dddddddddddddddddddddddddddddddddd99ddddd9ddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa99999999999999999d9999999999999999999999
-        888888888888ddddddddddddddddddddddddddddddddddd99dd99dddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa999999999999999999d999999999999999999999
-        888888888888ddddddddddddddddddddddddddddddddddddd999ddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa99999999999999999dd99999999999999999999
-        888888888888ddddddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa99999999999999999d99999999999999999999
-        888888888888ddddddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa999999999999999d99999999999999999999
-        888888888888ddd9ddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa9999999999999d9999999999999999999
-        888888888888ddd9ddddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa999999999999d9999999999999999999
-        8888888888888ddd99ddddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa99999999999d999999999999999999
-        8888888888888dddd99dddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa99999999999d99999999999999999
-        8888888888888ddddd99ddddddddddddddddddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa9999999999d9999999999999999
-        8888888888888ddddddd9dddddddddddddddddddddddddd9ddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa999999999dd99999999999999
-        8888888888888ddddddd99dddddddddddddddddddddddd9dddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa99999999dd999999999999
-        8888888888888dddddddd9ddddddddddddddddddddddd9ddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa9999999ddd9999999999
-        8888888888888dddddddd9dddddddddddddddddddddd9dddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa99999999ddddddddddd
-        8888888888888dddddddd9ddddddddddddddddddddd9ddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa99999999999999aaa
-        8888888888888dddddddd9ddddddddddddddddddd99dddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        8888888888888dddddddd9dddddddddddddddddd9dddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        8888888888888dddddd99ddddddddddddddddddd9dddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        8888888888888dddddd9dddddddddddddddddddd9ddddddddddd9999ddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddd9dddddddddddddddddddd99dddddddddd9dddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888dddd9dddddddddddddddddddddd99ddddddddd9dddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888dddddddddddddddddddddddddddd9ddddddddd99ddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddddddddddddddddddddddddddd9ddddddddd99dddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888dddddddddddddddddddddddddddddd99ddddddddd99daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888dddddddddddddddddddddddddddddddd9ddddddddd9daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddddddddddddddddddddddddddddddd9ddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888dddddddddddddddddddddddddddddddddd9ddddddddd666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddddddddddddddddddddddddddddddddd9dddddddd66666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888dddddddddddddddddddddddddddddddddddd9ddddddd666666666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddddddddddddddddddddddddddddddddddd9ddddddd622266666666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddddddddddddddddddddddddddddddddddd9ddddddd6666666666666222666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888ddddddddddddddddddddddddddddddddddddd9ddddddd6666666666622666266666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888888888999dddddddddddddddddddddddddddddddddd9ddddddd6666666666266666666666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        888888888888999999999999999dddddddddddddddddddddddd9ddddddd66666666626666666666666666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        8888888888999999999999999999999999999999ddddddddddd9ddddddd662266666666666666666222266666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888888999999999999999999999999999999999999999ddd9dddddddd6226666666666666666666662666666222666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        88888889999999999999999999999999999999999999999999999999ddd6266666666666622666666622666622262666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        888889999999999999999999999999999999999999999999999999999999999999222222226666666226666626666666666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        888999999999999999999999999999999999999999999999999999999999999999999999999966622266666626666662266666666666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        89999999999999999999999999999999999999999999999999999999999999999999999999999999999999666666622266666662266666666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999996666662266666662266666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999966662266666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999996666666aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999aaaaaaaaaaaaaaaaaaaaaaaaa
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999aaaaaaaaaaaaaaa
-        99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999aaaaa
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999222222299999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999999244444422222229999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999992244444444444622222222222299999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999992444444444444444444444444222222299999999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999922444444444444444444444444444444422229999999999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999924444442444444444444444444444444444422222299999999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999924444424224444444444444444444444444444444222299999999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999224444424442244444444444444444444444444444444222299999999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999999244444424444422244444444444444444444444444444444222229999999999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999996244444244444444422244444444444444444444444444444444442222299999999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999992444444244444444442422222244444444444444444444444444444444222299999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999922444444244444444224444444422222222222222222224444444444444444222999999999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999224444444244444444244444444444422244444444444222244444444444444442222699999999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999999244444442444444444244444444444224444444444222444422224444444444444442222269999999999999999999999999999999999999999999999
-        9999999999999999999999999999999999999992244444442444444444244444444442244444444442444444444442222444444444444444422226699999999999999999999999999999999999999999
-        9999999999999999999999999999999999999992444444424244444444244444444424444444444224444444444444442224444444444444444422226699999999999999999999999999999999999999
-        9999999999999999999999999999999999999924444444424422444444224444444424444444444244444444444442224442222444444444444444442222226699999999999999999999999999999999
-        9999999999999999999999999999999999999224444444424444222422224444444424444444444244444444444424444444444244444444444444444444442222269999999999999999999999999999
-        9999999999999999999999999999999999999244444444244444444224444444444424444444444244444444444424444444444422224444444444444444444444222229999999999999999999999999
-        9999999999999999999999999999999999992244444422444444444242222222222224444444442444444444444424444444442244442244444444444444444444444442229999999999999999999999
-        9999999999999999999999999999999999922444444224444444442244444444444442222244442444444444444224444444224444444422224444444444444444444444442222999999999999999999
-        9999999999999999999999999999999999224444442244444444422444444444422222224422222444444444444244444444244444444442222244444444444444444444444444229999999999999999
-        9999999999999999999999999999999999244444422444444444424444444444224444444444442222444444444244444442444444444422444422444444444444444444444444442229999999999999
-        9999999999999999999999999999999992444444424444444444224444444444244444444444442222222444444244444442444444444424444444224444444444444444444444444422222999999999
-        9999999999999999999999999999999922444444244444444444244444444442244444444444224444444222244244444442444444444424444444442244444444444444444444444444442226699999
-        9999999999999999999999999999999924444442444444444444224444444442444444444442444444444444422244444442444444444424444444444422444444444444444444444444444442226999
-        9999999999999999999999999999999244444424222244444444422444444442444444444424444444444444442222244442444444444424444444444222222224444444444444444444444444422226
-        9999999999999999999999999999992244444224444422222244224444444442444444444424444444444444222424422242444444444424444444442244444442244444444444444444444444444422
-        9999999999999999999999999999992444444244444444444222222222222222444444444244444444444442244444444422244444422222222244422444444444422244444444444444444444444444
-        9999999999999999999999999999924444442244444444444442444444444422444444444244444444444442444444444442422222244442244422424444444444222422222244444444444444444444
-        9999999999999999999999999999224444422444444444444422444444444442222444444244444444444422444444444442244444444224444444224444444422444444444222224444444444444444
-        9999999999999999999999999999244444424444444444444424444444444422222222444244444444444424444444444442444444444244444444422444444224444444444444442244444444444444
-        9999999999999999999999999992444444224444444444444424444444444244444444224244444444444424444444444424444444442244444444442224444244444444444444444422244444444444
-        9999999999999999999999999924444442244444444444444424444444442444444444442222222244444424444444444424444444442244444444442442244224444444422444444444422444444444
-        9999999999999999999999999944444442444444444444444424444444442444444444422244444422244224444444444424444444444244444444444444224424444444424444444444442244444444
-        `)
-    game.splash("Vielleicht sollte ich einfach wieder... was.. was ist das es sieht aus wie.. ")
-    Level_5()
-}
 controller.B.onEvent(ControllerButtonEvent.Released, function () {
     Render.moveWithController(3, 3, 1)
 })
+/**
+ * Level 6
+ */
 scene.onOverlapTile(SpriteKind.Player, tileUtil.door15, function (sprite, location) {
     Level_6()
 })
@@ -927,22 +691,27 @@ function Level_7 () {
         2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
         `)
     tiles.placeOnTile(mySprite, tiles.getTileLocation(2, 14))
-    game.splash("Wo bin ich")
 }
+/**
+ * Loose
+ */
 info.onLifeZero(function () {
     tiles.placeOnTile(mySprite, tiles.getTileLocation(13, 13))
     Render.setViewAngle(0, -90)
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
     sprites.destroyAllSpritesOfKind(SpriteKind.EnemyN)
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemybackroom)
-    info.setScore(0)
     info.stopCountdown()
-    game.splash("W. : bringt ihn um er hat zu viel von hier gesehen")
+    game.splash("Dead hehe")
     game.splash(info.score(), "Highscore")
     game.splash("Press \"A\" to Replay")
     Level_1()
 })
+/**
+ * Level 7
+ */
 scene.onOverlapTile(SpriteKind.Player, tileUtil.door10, function (sprite, location) {
+    info.setLife(10)
     Level_7()
 })
 statusbars.onZero(StatusBarKind.Energy, function (status) {
@@ -955,7 +724,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.EnemyN, function (sprite, ot
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.EnemyN, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.fire, 100)
-    info.changeLifeBy(-2)
+    info.changeLifeBy(-1)
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     Render.moveWithController(7, 3, 2)
@@ -970,9 +739,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     info.changeLifeBy(-1)
 })
 function Level_3 () {
-    sprites.destroyAllSpritesOfKind(SpriteKind.EnemyN)
-    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
-    info.stopCountdown()
     tiles.setCurrentTilemap(tilemap`Level7`)
     scene.setBackgroundImage(img`
         1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
@@ -1098,9 +864,10 @@ function Level_3 () {
         `)
     tiles.placeOnTile(mySprite, tiles.getTileLocation(27, 37))
     info.setLife(1)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.EnemyN)
     pause(9999)
     for (let index = 0; index < 1; index++) {
-        info.startCountdown(10)
         Follow_gegner_1 = sprites.create(img`
             ................
             ......3333......
@@ -1171,6 +938,7 @@ function Level_3 () {
         tiles.placeOnRandomTile(FOllow_gegner_2, tileUtil.object9)
         FOllow_gegner_2.follow(Render.getRenderSpriteVariable(), 37)
         scaling.scaleToPercent(FOllow_gegner_2, 50, ScaleDirection.Uniformly, ScaleAnchor.Middle)
+        sprites.destroyAllSpritesOfKind(SpriteKind.EnemyN)
     }
 }
 /**
@@ -1182,11 +950,15 @@ function Level_3 () {
 let FOllow_gegner_2: Sprite = null
 let Follow_gegner_1: Sprite = null
 let Einfacher_Gegner: Sprite = null
-let Energie: StatusBarSprite = null
-let projectile: Sprite = null
 let Normaler_Gegner: Sprite = null
+let projectile: Sprite = null
+let Schwerer_Gegner: Sprite = null
 let mySprite: Sprite = null
-music.play(music.melodyPlayable(music.spooky), music.PlaybackMode.LoopingInBackground)
+let Energie = statusbars.create(80, 11, StatusBarKind.Energy)
+Energie.max = 100
+Energie.positionDirection(CollisionDirection.Top)
+Energie.setBarBorder(1, 10)
+Energie.setColor(12, 10)
 tiles.setCurrentTilemap(tilemap`Level6`)
 scene.setBackgroundImage(img`
     3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
@@ -1314,8 +1086,9 @@ Render.setViewMode(ViewMode.raycastingView)
 mySprite = Render.getRenderSpriteVariable()
 Render.setViewAngle(0, -90)
 tiles.placeOnTile(mySprite, tiles.getTileLocation(13, 13))
-game.splash("Du: was ist das wo bin ich hier, dort liegt eine Pistole die ich mit \"\"A\" abfeuern kann und mit \"B\" kann ich noch rennen obwohl ich verletzt bin, si.. sind das Zombiegeräusche ich muss hier unten raus!! ")
+game.splash("Du: was ist das wo bin ich hier, dort liegt eine Pistole die ich mit \"\"A\" abfeuern kann und mit \"B\" kann ich noch rennen obwohl ich verletzt bin, si.. sind das Zombiegeräusche ich muss einen Ausgang finden!!")
 game.splash("Press \"A\" to play")
+music.play(music.melodyPlayable(music.spooky), music.PlaybackMode.LoopingInBackground)
 Level_1()
 forever(function () {
     if (controller.B.isPressed()) {
